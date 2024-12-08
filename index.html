@@ -1,11 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=Route/index.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redireccionando...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Parejas</title>
+    <link rel="stylesheet" href="styles.css">  
 </head>
 <body>
-  <p>Si no eres redirigido automáticamente, <a href="public/index.html">haz clic aquí</a>.</p>
+  <div class="container">
+    <h1>Crear Parejas</h1>
+    <form id="nombre-form">
+      <input type="text" id="nombre" placeholder="Ingresa tu nombre" required>
+      <button type="submit">Enviar</button>
+    </form>
+    <div id="resultado"></div>
+  </div>
+
+  <script>
+    document.getElementById('nombre-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const response = await fetch('/api/agregar-nombre', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre })
+      });
+      const data = await response.json();
+      document.getElementById('resultado').innerText = data.message;
+    });
+  </script>
 </body>
 </html>
